@@ -1,8 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import AddNote from "../components/AddNote/AddNote";
 import NoteListing from "../components/NoteListing/NoteListing";
+import { useDispatch, useSelector } from "react-redux";
+import { getThunkMethod } from "../redux/notesThunk";
 
 function Home() {
+  const dispatch  =useDispatch();
+  // const notes= useSelector(state=>state);
+  // console.log(notes)
+
+  useEffect(()=>{
+   dispatch(getThunkMethod());
+  },[])
   return (
     <div className="container">
       <div className="row center-align">
