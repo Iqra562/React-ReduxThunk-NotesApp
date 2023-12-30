@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { db } from "../../config/firebaseConfig";
  import { collection, addDoc } from "firebase/firestore";
 import CustomSpinner from "../CustomSpinner/CustomSpinner";
-import { addThunkMethod } from "../../redux/notesThunk";
+import { addThunkMethod, updateThunkMethod } from "../../redux/notesThunk";
 function AddNote() {
-  const {loading:loader} = useSelector((state)=>state?.notes)
+  const {loading:loader,isEditNoteAvailable} = useSelector((state)=>state?.notes)
 const [inputFields , setInputFields]  =useState({
   title:"",
   content:"",
@@ -31,12 +31,34 @@ title,
 content,
 favourite:false,
 }
-dispatch(addThunkMethod(payload))
+if(isEditMode){
+const editPayload = {
+  ...payload,
+  favorite: isEditNoteAvailable?.favorite,
+  id: isEditNoteAvailable?.id,
+}
+dispatch(updateThunkMethod(editPayload))
+}else{
+
+  dispatch(addThunkMethod(payload))
+}
 setInputFields({
   title: "",
   content: "",
 });
 }
+const isEditMode = Boolean(isEditNoteAvailable);
+useEffect(()=>{
+if(isEditNoteAvailable?.title || isEditNoteAvailable?.content){
+setInputFields({
+  ...inputFields,
+  title:isEditNoteAvailable.title,
+  content:isEditNoteAvailable.content
+})
+
+
+}
+},[isEditNoteAvailable])
 
   return (
     <div className="section form-container">
@@ -67,7 +89,7 @@ setInputFields({
           <label>Content</label>
         </div>
         <button className="btn green" type="submit" >
-          Add Note
+          {isEditMode?"Update Note" :"Add Note"}
         </button>
             </div>
       </form>

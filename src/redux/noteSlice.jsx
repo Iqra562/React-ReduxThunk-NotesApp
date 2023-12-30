@@ -12,7 +12,7 @@ export const noteSlice= createSlice({
     reducers:{
   saveNoteforUpdate : (state,action)=>{
 state.isEditNoteAvailable  = action.payload;
-console.log(action.payload)
+// console.log(action.payload)
 
     },
 },
@@ -46,4 +46,5 @@ builder.addCase(getThunkMethod.rejected,(state)=>{state.loading = false})
 }
 
 })
+export const {saveNoteforUpdate} = noteSlice.actions
 export default noteSlice.reducer;

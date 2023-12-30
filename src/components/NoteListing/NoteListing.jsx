@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import CustomSpinner from "../CustomSpinner/CustomSpinner";
-import { deleteThunkMethod,favoriteThunkMethod,saveNoteforUpdate } from "../../redux/notesThunk";
+import { deleteThunkMethod,favoriteThunkMethod } from "../../redux/notesThunk";
+import {saveNoteforUpdate} from "../../redux/noteSlice";
 
 function NoteListing() {
 const dispatch = useDispatch();
-  const {notes,loading}= useSelector(select=> select.notes);
+  const {loading,notes}= useSelector(select=> select.notes);
   const [isShowFavoriteNote,setIsShowFavoriteNote] = useState(false);
   // console.log(notes)
   const deleteNoteHandler = (event,singleData)=>{
@@ -30,6 +31,7 @@ setIsShowFavoriteNote(event.target.checked);
 event.preventDefault();
 dispatch(saveNoteforUpdate(singleData))
   }
+  
   return (
     <div className="notesList">
       <div class="switch left-align">

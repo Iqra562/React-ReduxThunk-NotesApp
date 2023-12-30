@@ -60,3 +60,16 @@ await updateDoc(documentREference,  {
 
     }
 })
+export const  updateThunkMethod = createAsyncThunk("updateNotes",async(singleNote,parameter)=>{
+    const {dispatch} = parameter
+        try{
+    const documentREference  = await doc(db,collectionName,singleNote?.id);
+    await updateDoc(documentREference,singleNote)
+    
+          dispatch(getThunkMethod())  
+        }catch(error)
+        {
+            console.log(error)
+    
+        }
+    })
