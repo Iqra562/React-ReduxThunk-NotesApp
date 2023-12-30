@@ -47,7 +47,7 @@ export const  deleteThunkMethod = createAsyncThunk("deleteNote",async(singleNote
 export const  favoriteThunkMethod = createAsyncThunk("favoriteNote",async(singleNote,parameter)=>{
 const {dispatch} = parameter
     try{
-const documentREference  = await doc(db,collectionName,singleNote?.id);
+const documentREference  = await doc(db,collectionName,singleNote);
 await updateDoc(documentREference,  {
     ...singleNote,
     favourite: !singleNote?.favourite

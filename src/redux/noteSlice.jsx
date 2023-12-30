@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addThunkMethod, favoriteThunkMethod, getThunkMethod } from "./notesThunk";
+import { addThunkMethod, favoriteThunkMethod, getThunkMethod,updateThunkMethod } from "./notesThunk";
 const initialState = {
     notes:[],
     loading: false,
@@ -43,6 +43,17 @@ builder.addCase(getThunkMethod.rejected,(state)=>{state.loading = false})
   
 // })
 // builder.addCase(favoriteThunkMethod.rejected,(state)=>{state.loading = false})
+.addCase(updateThunkMethod.pending, (state) => {
+    state.loading = true;
+  })
+  .addCase(updateThunkMethod.fulfilled, (state, ) => {
+    state.loading = false;
+    state.isEditNoteAvailable = null;
+  })
+  .addCase(updateThunkMethod.rejected, (state) => {
+    state.loading = false;
+    state.isEditNoteAvailable = null;
+  });
 }
 
 })

@@ -34,7 +34,7 @@ favourite:false,
 if(isEditMode){
 const editPayload = {
   ...payload,
-  favorite: isEditNoteAvailable?.favorite,
+  favorite: isEditNoteAvailable?.favourite,
   id: isEditNoteAvailable?.id,
 }
 dispatch(updateThunkMethod(editPayload))
