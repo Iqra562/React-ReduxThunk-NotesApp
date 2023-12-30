@@ -3,11 +3,19 @@ import { addThunkMethod, favoriteThunkMethod, getThunkMethod } from "./notesThun
 const initialState = {
     notes:[],
     loading: false,
+    isEditNoteAvailable :null,
 }
 
 export const noteSlice= createSlice({
     name:"notes",
     initialState,
+    reducers:{
+  saveNoteforUpdate : (state,action)=>{
+state.isEditNoteAvailable  = action.payload;
+console.log(action.payload)
+
+    },
+},
     extraReducers:(builder)=>{
         
 builder.addCase(addThunkMethod.pending,(state)=>{

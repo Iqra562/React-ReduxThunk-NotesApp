@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import CustomSpinner from "../CustomSpinner/CustomSpinner";
-import { deleteThunkMethod } from "../../redux/notesThunk";
-import { favoriteThunkMethod } from "../../redux/notesThunk";
+import { deleteThunkMethod,favoriteThunkMethod,saveNoteforUpdate } from "../../redux/notesThunk";
 
 function NoteListing() {
 const dispatch = useDispatch();
@@ -27,6 +26,10 @@ console.log(event.target.checked)
 setIsShowFavoriteNote(event.target.checked);
   }
   const  getNotes = isShowFavoriteNote ? notes?.filter((singleNote)=>Boolean(singleNote?.favourite)) : notes;
+  const onEditNote = (event,singleData)=>{
+event.preventDefault();
+dispatch(saveNoteforUpdate(singleData))
+  }
   return (
     <div className="notesList">
       <div class="switch left-align">
@@ -61,6 +64,7 @@ return(
       <i
         className="material-icons black-text"
         style={{ cursor: "pointer" }}
+        onClick={(event)=>onEditNote(event,singleData)}
       >
         edit
       </i>
