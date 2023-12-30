@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import CustomSpinner from "../CustomSpinner/CustomSpinner";
@@ -7,7 +7,8 @@ import { favoriteThunkMethod } from "../../redux/notesThunk";
 
 function NoteListing() {
 const dispatch = useDispatch();
-  const {notes,loading}= useSelector(select=> select.notes)
+  const {notes,loading}= useSelector(select=> select.notes);
+  const [isShowFavoriteNote,setIsShowFavoriteNote] = useState(false);
   // console.log(notes)
   const deleteNoteHandler = (event,singleData)=>{
    event.preventDefault();
@@ -20,10 +21,26 @@ const dispatch = useDispatch();
       event.preventDefault();
       dispatch(favoriteThunkMethod(singleData))
   }
+  const showFavoriteNotes = (event)=>{
+event.preventDefault();
+console.log(event.target.checked)
+setIsShowFavoriteNote(event.target.checked);
+  }
+  const  getNotes = isShowFavoriteNote ? notes?.filter((singleNote)=>Boolean(singleNote?.favourite)) : notes;
   return (
     <div className="notesList">
+      <div class="switch left-align">
+        <label style={{ fontSize: "20px" }}>
+          <input
+            type="checkbox"
+            onChange={(event) => showFavoriteNotes(event)}
+          />
+          <span class="lever"></span>
+          Show Favorite Notes
+        </label>
+      </div>
       <CustomSpinner loading ={loading}/>
-      {notes?.length>0 && notes?.map((singleData)=>{
+      {getNotes?.length>0 && getNotes?.map((singleData)=>{
         const heartIcon = singleData?.favourite ? "favorite":"favorite_border"
 return(
   <div className="note  white">
